@@ -26,45 +26,7 @@ body {
 }
 
 /* Header Slider Styles */
-.header-section {
-    position: relative;
-}
 
-.carousel-inner {
-    height: 400px;
-}
-
-.slide-bg {
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-}
-
-.slide-1 {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-}
-
-.slide-2 {
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
-}
-
-.slide-3 {
-    background: linear-gradient(135deg, #43a047, #2e7d32);
-}
-
-.slide-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 /* Navigation */
 .navbar-brand {
@@ -418,4 +380,83 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary-color);
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.slide-bg {
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+/* === SLIDER STYLING === */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.slide-bg {
+    height: 60vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.slide-1 {
+    background-image: url('../images/uptd.jpg');
+}
+
+.slide-2 {
+     background-image: url('../images/uptd-1.jpg');
+}
+
+.slide-3 {
+     background-image: url('../images/upptd-2.jpg');
+}
+
+.slide-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.text-center.w-100 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-overlay h1,
+.slide-overlay p {
+    color: white;
+    margin: 0;
+    padding: 5px 20px;
+}
+
+@media (max-width: 768px) {
+    .slide-bg {
+        height: 70vh;
+    }
+
+    .slide-overlay h1 {
+        font-size: 2rem;
+    }
+
+    .slide-overlay p {
+        font-size: 1rem;
+    }
 }
