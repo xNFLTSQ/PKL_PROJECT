@@ -43,15 +43,15 @@ body {
 }
 
 .slide-1 {
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    background-image: url('../images/uptd.jpg');
 }
 
 .slide-2 {
-    background: linear-gradient(135deg, #1e88e5, #1565c0);
+    background-image: url('../images/uptd2.jpg');
 }
 
 .slide-3 {
-    background: linear-gradient(135deg, #43a047, #2e7d32);
+    background-image: url('../images/uptd3.jpg');
 }
 
 .slide-overlay {
