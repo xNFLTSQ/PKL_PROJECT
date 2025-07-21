@@ -1,6 +1,6 @@
 <?php
-// Database configuration template
-// Copy this file to config.php and update with your database settings
+// Database configuration
+// Update with your database settings
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
