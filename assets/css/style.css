@@ -27,6 +27,44 @@ body {
 
 /* Header Slider Styles */
 
+<<<<<<< HEAD
+.carousel-inner {
+    height: 400px;
+}
+
+.slide-bg {
+    height: 400px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.slide-1 {
+    background-image: url('../images/uptd.jpg');
+}
+
+.slide-2 {
+    background-image: url('assets/foto_logo/uptd2.jpg');
+}
+
+.slide-3 {
+    background-image: url('../images/uptd3.jpg');
+}
+
+.slide-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+=======
+>>>>>>> 87b0f4f62c8cad5372c47488933460087eaec782
 
 /* Navigation */
 .navbar-brand {
