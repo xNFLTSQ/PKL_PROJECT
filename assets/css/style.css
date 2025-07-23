@@ -27,7 +27,6 @@ body {
 
 /* Header Slider Styles */
 
-<<<<<<< HEAD
 .carousel-inner {
     height: 400px;
 }
@@ -41,15 +40,15 @@ body {
 }
 
 .slide-1 {
-    background-image: url('../images/uptd.jpg');
+    background-image: url('foto-untuk-slide-dan-header/uptd.jpg');
 }
 
 .slide-2 {
-    background-image: url('assets/foto_logo/uptd2.jpg');
+    background-image: url('foto-untuk-slide-dan-header/uptd2.jpg');
 }
 
 .slide-3 {
-    background-image: url('../images/uptd3.jpg');
+    background-image: url('foto-untuk-slide-dan-header/uptd3.jpg');
 }
 
 .slide-overlay {
@@ -63,8 +62,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-=======
->>>>>>> 87b0f4f62c8cad5372c47488933460087eaec782
 
 /* Navigation */
 .navbar-brand {
