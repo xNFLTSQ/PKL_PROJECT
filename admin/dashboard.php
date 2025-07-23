@@ -95,10 +95,11 @@ $recent_dispensations = $pdo->query("SELECT * FROM dispensation ORDER BY created
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h2 class="mb-0">
-                        <i class="fas fa-tachometer-alt me-2"></i>
-                        Dashboard Admin
-                    </h2>
+                    <h2 class="mb-0 d-flex align-items-center">
+
+                    <img src="assets/foto_logo/logo.png" alt="Logo TEKKOM INFODIK" style="height: 40px; margin-right: 10px;">
+                    Dashboard Admin
+                </h2>
                     <p class="mb-0 opacity-75">Selamat datang, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></p>
                 </div>
                 <div class="col-md-6 text-md-end">

@@ -2,6 +2,7 @@
 require_once 'includes/config.example.php';
 require_once 'includes/functions.php';
 
+
 $page_title = 'Beranda';
 ?>
 
