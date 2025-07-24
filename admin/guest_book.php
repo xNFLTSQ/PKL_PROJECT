@@ -53,10 +53,10 @@ foreach ($guests as $guest) {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-6">
-                    <h2 class="mb-0">
-                        <i class="fas fa-book me-2"></i>
-                        Kelola Buku Tamu
-                    </h2>
+                     <h2 class="mb-0 d-flex align-items-center">
+            <img src="../assets/images/logo.png" alt="Logo TEKKOM INFODIK" style="height: 40px; margin-right: 10px;">
+            <?= $page_title ?>
+        </h2>
                     <p class="mb-0 opacity-75">Selamat datang, <?php echo htmlspecialchars($_SESSION['admin_username']); ?></p>
                 </div>
                 <div class="col-md-6 text-md-end">
