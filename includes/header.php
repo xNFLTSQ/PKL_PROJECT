@@ -15,67 +15,68 @@
 </head>
 <body>
     <!-- Header with Photo Slider -->
-    <header class="header-section">
-        <div class="container-fluid p-0">
-            <!-- Photo Slider -->
-            <div id="headerSlider" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="0" class="active"></button>
-                    <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="1"></button>
-                    <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="2"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="slide-bg slide-1">
-                            <div class="slide-overlay">
-                                <div class="container">
-                                    <div class="row justify-content-center text-center">
-                                        <div class="col-lg-8">
-                                            <h1 class="display-4 text-white mb-3">Selamat Datang</h1>
-                                            <p class="lead text-white">Sistem Informasi Buku Tamu dan Dispensasi</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="slide-bg slide-2">
-                            <div class="slide-overlay">
-                                <div class="container">
-                                    <div class="row justify-content-center text-center">
-                                        <div class="col-lg-8">
-                                            <h1 class="display-4 text-white mb-3">Pelayanan Terbaik</h1>
-                                            <p class="lead text-white">Melayani dengan Profesional dan Transparan</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="slide-bg slide-3">
-                            <div class="slide-overlay">
-                                <div class="container">
-                                    <div class="row justify-content-center text-center">
-                                        <div class="col-lg-8">
-                                            <h1 class="display-4 text-white mb-3">Inovasi Digital</h1>
-                                            <p class="lead text-white">Transformasi Digital untuk Pelayanan Prima</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#headerSlider" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#headerSlider" data-bs-slide="next">
-                    <span class="carousel-control-next-icon"></span>
-                </button>
+   <!-- Header dengan Slider -->
+<header class="header-section">
+  <div class="container-fluid p-0">
+    <div id="headerSlider" class="carousel slide" data-bs-ride="carousel">
+      
+      <!-- Indicator Bulat -->
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#headerSlider" data-bs-slide-to="2"></button>
+      </div>
+
+      <!-- Slides -->
+      <div class="carousel-inner">
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="fullscreen-slide position-relative">
+            <img src="assets/foto/uptd-1.jpg" class="d-block w-100" alt="Gedung UPTD">
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center text-center">
+              <h1 class="display-4 text-white mb-3">Selamat Datang</h1>
+              <p class="lead text-white">Sistem Informasi Buku Tamu dan Dispensasi</p>
             </div>
+          </div>
         </div>
+
+        <!-- Slide 2 -->
+        <div class="carousel-item">
+          <div class="fullscreen-slide position-relative">
+            <img src="assets/foto/uptd.jpg" class="d-block w-100" alt="Pelayanan Terbaik">
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center text-center">
+              <h1 class="display-4 text-white mb-3">Pelayanan Terbaik</h1>
+              <p class="lead text-white">Melayani dengan Profesional dan Transparan</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="carousel-item">
+          <div class="fullscreen-slide position-relative">
+            <img src="assets/foto/upptd-2.jpg" class="d-block w-100" alt="Inovasi Digital">
+            <div class="carousel-caption d-flex flex-column justify-content-center align-items-center text-center">
+              <h1 class="display-4 text-white mb-3">Inovasi Digital</h1>
+              <p class="lead text-white">Transformasi Digital untuk Pelayanan Prima</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol Prev -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#headerSlider" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Sebelumnya</span>
+      </button>
+
+      <!-- Tombol Next -->
+      <button class="carousel-control-next" type="button" data-bs-target="#headerSlider" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Selanjutnya</span>
+      </button>
+    </div>
+  </div>
+</header>
         
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
