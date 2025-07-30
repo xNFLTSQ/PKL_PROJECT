@@ -32,7 +32,7 @@ body {
 }
 
 .slide-bg {
-    height: 400px;
+    height: 60vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -40,15 +40,15 @@ body {
 }
 
 .slide-1 {
-    background-image: url('foto-untuk-slide-dan-header/uptd.jpg');
+    background-image: url('../images/uptd.jpg');
 }
 
 .slide-2 {
-    background-image: url('foto-untuk-slide-dan-header/uptd2.jpg');
+    background-image: url('../images/uptd-1.jpg');
 }
 
 .slide-3 {
-    background-image: url('foto-untuk-slide-dan-header/uptd3.jpg');
+    background-image: url('../images/upptd-2.jpg');
 }
 
 .slide-overlay {
