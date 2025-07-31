@@ -348,8 +348,14 @@ if ($_POST) {
                 
                 <?php
                 // Get recent dispensation entries (last 5)
-                $stmt = $pdo->query("SELECT name, department, reason, start_date, end_date, status, created_at FROM dispensation ORDER BY created_at DESC LIMIT 5");
-                $recent_dispensations = $stmt->fetchAll();
+                try {
+                    $stmt = $pdo->prepare("SELECT name, department, reason, start_date, end_date, status, created_at FROM dispensation ORDER BY created_at DESC LIMIT ?");
+                    $stmt->execute([5]);
+                    $recent_dispensations = $stmt->fetchAll();
+                } catch (PDOException $e) {
+                    $recent_dispensations = [];
+                    error_log("Database error: " . $e->getMessage());
+                }
                 ?>
                 
                 <?php if ($recent_dispensations): ?>

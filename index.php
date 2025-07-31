@@ -2,8 +2,70 @@
 require_once 'includes/config.example.php';
 require_once 'includes/functions.php';
 
+class HomeController {
+    private $pdo;
+    
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    
+    public function getTodayStatistics() {
+        $today = date('Y-m-d');
+        
+        return [
+            'guest_today' => $this->getGuestBookCountToday($today),
+            'dispensation_today' => $this->getDispensationCountToday($today),
+            'total_guests' => $this->getTotalGuestBookCount(),
+            'total_dispensations' => $this->getTotalDispensationCount()
+        ];
+    }
+    
+    private function getGuestBookCountToday($today) {
+        try {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM guest_book WHERE DATE(created_at) = ?");
+            $stmt->execute([$today]);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting guest book count today: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    private function getDispensationCountToday($today) {
+        try {
+            $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM dispensation WHERE DATE(created_at) = ?");
+            $stmt->execute([$today]);
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting dispensation count today: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    private function getTotalGuestBookCount() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM guest_book");
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting total guest book count: " . $e->getMessage());
+            return 0;
+        }
+    }
+    
+    private function getTotalDispensationCount() {
+        try {
+            $stmt = $this->pdo->query("SELECT COUNT(*) FROM dispensation");
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error getting total dispensation count: " . $e->getMessage());
+            return 0;
+        }
+    }
+}
 
 $page_title = 'Beranda';
+$homeController = new HomeController($pdo);
+$statistics = $homeController->getTodayStatistics();
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -109,53 +171,30 @@ $page_title = 'Beranda';
                 <p class="text-muted">Data penggunaan sistem hari ini</p>
             </div>
             
-            <?php
-            // Get today's statistics
-            $today = date('Y-m-d');
-            
-            // Guest book count today
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM guest_book WHERE DATE(created_at) = ?");
-            $stmt->execute([$today]);
-            $guest_today = $stmt->fetchColumn();
-            
-            // Dispensation count today
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM dispensation WHERE DATE(created_at) = ?");
-            $stmt->execute([$today]);
-            $dispensation_today = $stmt->fetchColumn();
-            
-            // Total guest book
-            $stmt = $pdo->query("SELECT COUNT(*) FROM guest_book");
-            $total_guests = $stmt->fetchColumn();
-            
-            // Total dispensation
-            $stmt = $pdo->query("SELECT COUNT(*) FROM dispensation");
-            $total_dispensations = $stmt->fetchColumn();
-            ?>
-            
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-number"><?php echo $guest_today; ?></div>
+                    <div class="stats-number"><?php echo $statistics['guest_today']; ?></div>
                     <div class="stats-label">Buku Tamu Hari Ini</div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-number"><?php echo $dispensation_today; ?></div>
+                    <div class="stats-number"><?php echo $statistics['dispensation_today']; ?></div>
                     <div class="stats-label">Dispensasi Hari Ini</div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-number"><?php echo $total_guests; ?></div>
+                    <div class="stats-number"><?php echo $statistics['total_guests']; ?></div>
                     <div class="stats-label">Total Buku Tamu</div>
                 </div>
             </div>
             
             <div class="col-lg-3 col-md-6 mb-4">
                 <div class="stats-card">
-                    <div class="stats-number"><?php echo $total_dispensations; ?></div>
+                    <div class="stats-number"><?php echo $statistics['total_dispensations']; ?></div>
                     <div class="stats-label">Total Dispensasi</div>
                 </div>
             </div>

@@ -2,59 +2,100 @@
 require_once 'includes/config.example.php';
 require_once 'includes/functions.php';
 
-$page_title = 'Buku Tamu';
-$success_message = '';
-$error_message = '';
-
-// Handle form submission
-if ($_POST) {
-    // Verify CSRF token
-    if (!verify_csrf_token($_POST['csrf_token'] ?? '')) {
-        $error_message = 'Token keamanan tidak valid. Silakan coba lagi.';
-    } else {
-        // Sanitize input
-        $name = sanitize_input($_POST['name'] ?? '');
-        $email = sanitize_input($_POST['email'] ?? '');
-        $phone = sanitize_input($_POST['phone'] ?? '');
-        $institution = sanitize_input($_POST['institution'] ?? '');
-        $message = sanitize_input($_POST['message'] ?? '');
+class GuestBookController {
+    private $pdo;
+    private $success_message = '';
+    private $error_message = '';
+    
+    public function __construct($pdo) {
+        $this->pdo = $pdo;
+    }
+    
+    public function handleFormSubmission() {
+        if (!$_POST) return;
         
-        // Validation
+        if (!$this->validateCSRFToken()) {
+            $this->error_message = 'Token keamanan tidak valid. Silakan coba lagi.';
+            return;
+        }
+        
+        $formData = $this->sanitizeFormData();
+        $errors = $this->validateFormData($formData);
+        
+        if (empty($errors)) {
+            $this->saveGuestBookEntry($formData);
+        } else {
+            $this->error_message = implode('<br>', $errors);
+        }
+    }
+    
+    private function validateCSRFToken() {
+        return verify_csrf_token($_POST['csrf_token'] ?? '');
+    }
+    
+    private function sanitizeFormData() {
+        return [
+            'name' => sanitize_input($_POST['name'] ?? ''),
+            'email' => sanitize_input($_POST['email'] ?? ''),
+            'phone' => sanitize_input($_POST['phone'] ?? ''),
+            'institution' => sanitize_input($_POST['institution'] ?? ''),
+            'message' => sanitize_input($_POST['message'] ?? '')
+        ];
+    }
+    
+    private function validateFormData($data) {
         $errors = [];
         
-        if (empty($name)) {
+        if (empty($data['name'])) {
             $errors[] = 'Nama wajib diisi';
         }
         
-        if (!empty($email) && !is_valid_email($email)) {
+        if (!empty($data['email']) && !is_valid_email($data['email'])) {
             $errors[] = 'Format email tidak valid';
         }
         
-        if (empty($message)) {
+        if (empty($data['message'])) {
             $errors[] = 'Pesan wajib diisi';
         }
         
-        if (strlen($message) < 10) {
+        if (strlen($data['message']) < 10) {
             $errors[] = 'Pesan minimal 10 karakter';
         }
         
-        if (empty($errors)) {
-            try {
-                $stmt = $pdo->prepare("INSERT INTO guest_book (name, email, phone, institution, message) VALUES (?, ?, ?, ?, ?)");
-                $stmt->execute([$name, $email, $phone, $institution, $message]);
-                
-                $success_message = 'Terima kasih! Buku tamu Anda telah berhasil disimpan.';
-                
-                // Clear form data
-                $_POST = [];
-            } catch (PDOException $e) {
-                $error_message = 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.';
-            }
-        } else {
-            $error_message = implode('<br>', $errors);
+        return $errors;
+    }
+    
+    private function saveGuestBookEntry($data) {
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO guest_book (name, email, phone, institution, message) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$data['name'], $data['email'], $data['phone'], $data['institution'], $data['message']]);
+            
+            $this->success_message = 'Terima kasih! Buku tamu Anda telah berhasil disimpan.';
+            $_POST = []; // Clear form data
+        } catch (PDOException $e) {
+            $this->error_message = 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.';
+            error_log("Guest book save error: " . $e->getMessage());
         }
     }
+    
+    public function getRecentEntries($limit = 5) {
+        try {
+            $stmt = $this->pdo->prepare("SELECT name, institution, message, created_at FROM guest_book ORDER BY created_at DESC LIMIT ?");
+            $stmt->execute([$limit]);
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Get recent entries error: " . $e->getMessage());
+            return [];
+        }
+    }
+    
+    public function getSuccessMessage() { return $this->success_message; }
+    public function getErrorMessage() { return $this->error_message; }
 }
+
+$page_title = 'Buku Tamu';
+$guestBook = new GuestBookController($pdo);
+$guestBook->handleFormSubmission();
 ?>
 
 <?php include 'includes/header.php'; ?>
@@ -80,18 +121,18 @@ if ($_POST) {
 
         <!-- Alert Messages -->
         <div id="alertContainer">
-            <?php if ($success_message): ?>
+            <?php if ($guestBook->getSuccessMessage()): ?>
                 <div class="alert alert-success alert-dismissible fade show">
                     <i class="fas fa-check-circle me-2"></i>
-                    <?php echo $success_message; ?>
+                    <?php echo $guestBook->getSuccessMessage(); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             <?php endif; ?>
 
-            <?php if ($error_message): ?>
+            <?php if ($guestBook->getErrorMessage()): ?>
                 <div class="alert alert-danger alert-dismissible fade show">
                     <i class="fas fa-exclamation-triangle me-2"></i>
-                    <?php echo $error_message; ?>
+                    <?php echo $guestBook->getErrorMessage(); ?>
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                 </div>
             <?php endif; ?>
@@ -237,8 +278,7 @@ if ($_POST) {
                 
                 <?php
                 // Get recent guest book entries (last 5)
-                $stmt = $pdo->query("SELECT name, institution, message, created_at FROM guest_book ORDER BY created_at DESC LIMIT 5");
-                $recent_entries = $stmt->fetchAll();
+                $recent_entries = $guestBook->getRecentEntries();
                 ?>
                 
                 <?php if ($recent_entries): ?>
